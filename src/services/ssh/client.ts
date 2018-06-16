@@ -1,4 +1,4 @@
-import {DataBag, Logger, INFO, IDataBagData, PortChecker} from '../utils';
+import {DataBag, Logger, INFO, IDataBagData} from '../utils';
 import {Session} from './index';
 import * as net from 'net';
 import * as util from 'util';
@@ -94,11 +94,8 @@ export class Client {
         } else {
           logger.warning('Port forwarding failed:', inspect(error));
         }
-        // if no delay, session not created, and fatal "Error: Bad identification start"
-        setTimeout(() => {
-          this.client.end();
-        }, 1);
-        // reject();
+        // @TODO: this emit an error because on('session') listener fails
+        this.client.end();
       });
       logger.info('tcpip-forward accepted');
       logger.notice('Created server that listen on port ' + info.bindPort);
