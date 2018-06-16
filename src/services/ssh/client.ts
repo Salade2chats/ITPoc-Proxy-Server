@@ -35,6 +35,9 @@ export class Client {
       })
       .on('end', () => {
         this.triggerEnd();
+      })
+      .on('error', error => {
+        logger.warning('Client error triggered', inspect(error));
       });
   }
 
